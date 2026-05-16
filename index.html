@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álbum Panini WC 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Álbum Panini WC 2026</h1>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value stat-tengo" id="count-tengo">0</span>
+        <span class="stat-label">tengo</span>
+      </div>
+      <span class="stat-sep">/</span>
+      <div class="stat">
+        <span class="stat-value" id="count-total">0</span>
+        <span class="stat-label">total</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value stat-falta" id="count-falta">0</span>
+        <span class="stat-label">faltan</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value stat-extra" id="count-extras">0</span>
+        <span class="stat-label">extras</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input type="search" id="search" placeholder="Buscar código o nombre..." autocomplete="off">
+    <select id="filter-status">
+      <option value="all">Todas</option>
+      <option value="tengo">Tengo</option>
+      <option value="falta">Faltan</option>
+    </select>
+    <select id="filter-pais">
+      <option value="all">Todos los países</option>
+    </select>
+    <div class="controls-actions">
+      <button id="btn-export" class="btn-primary">Exportar CSV</button>
+      <button id="btn-reset" class="btn-secondary" title="Descartar cambios locales y volver al estado del CSV">Resetear</button>
+    </div>
+  </div>
+
+  <main id="sticker-list">
+    <div class="loading">Cargando figuritas…</div>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
