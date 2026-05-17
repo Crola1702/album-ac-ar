@@ -183,6 +183,8 @@ function handleExtra(event, id, delta) {
   const current = getStickerState(base);
   if (delta > 0 && !current.completado) {
     setCompletado(id, true);
+  } else if (delta < 0 && current.completado && current.extra === 0) {
+    setCompletado(id, false);
   } else {
     setExtra(id, current.extra + delta);
   }
