@@ -62,11 +62,7 @@ function matchesFilters(s, filters) {
   if (pais !== 'all' && s.pais !== pais) return false;
   if (status === 'tengo' && !s.completado) return false;
   if (status === 'falta' && s.completado) return false;
-  if (search) {
-    const inId = s.id.toLowerCase().includes(search);
-    const inName = s.nombre && s.nombre.toLowerCase().includes(search);
-    if (!inId && !inName) return false;
-  }
+  if (search && !s.id.toLowerCase().includes(search)) return false;
   return true;
 }
 
@@ -140,13 +136,9 @@ function renderStickers() {
       const extraBadge = s.extra > 0
         ? `<span class="badge badge-extra">+${s.extra}</span>`
         : '';
-      const nameContent = s.nombre
-        ? escapeHtml(s.nombre)
-        : '<span class="empty">—</span>';
 
       html += `<div class="sticker-row">`;
       html += `<span class="sticker-id">${escapeHtml(s.id)}</span>`;
-      html += `<span class="sticker-name">${nameContent}</span>`;
       html += `<div class="badges">`;
       html += `<button class="badge ${badgeClass}" onclick="handleToggle(event,'${escapeHtml(s.id)}')">${badgeText}</button>`;
       html += extraBadge;
@@ -189,7 +181,11 @@ function handleExtra(event, id, delta) {
   const base = STICKERS.find(s => s.id === id);
   if (!base) return;
   const current = getStickerState(base);
-  setExtra(id, current.extra + delta);
+  if (delta > 0 && !current.completado) {
+    setCompletado(id, true);
+  } else {
+    setExtra(id, current.extra + delta);
+  }
   renderAll();
 }
 
@@ -206,11 +202,10 @@ function toggleGroup(codigo) {
 // ---- Export / Reset ----
 
 function exportCSV() {
-  const rows = ['ID,NOMBRE,COMPLETADO,EXTRA'];
+  const rows = ['ID,COMPLETADO,EXTRA'];
   STICKERS.forEach(base => {
     const s = getStickerState(base);
-    const nombre = (s.nombre || '').replace(/,/g, ';').replace(/\n/g, ' ');
-    rows.push(`${s.id},${nombre},${s.completado ? 'SI' : 'NO'},${s.extra}`);
+    rows.push(`${s.id},${s.completado ? 'SI' : 'NO'},${s.extra}`);
   });
   const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);

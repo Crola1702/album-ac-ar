@@ -255,16 +255,6 @@ button:hover { filter: brightness(0.92); }
   min-width: 52px;
 }
 
-.sticker-name {
-  flex: 1;
-  font-size: 0.8125rem;
-  color: var(--gray-700);
-}
-
-.sticker-name.empty {
-  color: var(--gray-300);
-  font-style: italic;
-}
 
 .badges {
   display: flex;

@@ -18,7 +18,6 @@ with open('monitas.csv', newline='', encoding='utf-8') as f:
             continue
         stickers.append({
             'id': row_id,
-            'nombre': row['NOMBRE'].strip(),
             'pais': row_id[:3],
             'completado': row['COMPLETADO'].strip().upper() == 'SI',
             'extra': int(row.get('EXTRA', '0').strip() or '0')
